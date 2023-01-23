@@ -19,6 +19,8 @@ sumArr[j] - sumArr[i-1]
 ```
 예제: 백준 11659([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Silver/11659.%E2%80%85%EA%B5%AC%EA%B0%84%E2%80%85%ED%95%A9%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0%E2%80%854/%EA%B5%AC%EA%B0%84%E2%80%85%ED%95%A9%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0%E2%80%854.kt))
 
+---
+
 ## 2차원 배열에서의 합배열
 ```kotlin
 // arr: 주어진 배열, sumArr: 합 배열

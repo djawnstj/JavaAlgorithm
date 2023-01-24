@@ -97,6 +97,32 @@ while (lt < rt) {
 ```
 예제: 백준 1940([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Silver/1940.%E2%80%85%EC%A3%BC%EB%AA%BD/%EC%A3%BC%EB%AA%BD.kt))
 
+## 중복이 허용된 정수의 배열에서 합 조건 찾기
+N개의 정수를 받은 후 해당 배열에서 서로 다른 두 수의 합으로 표현되는 숫자의 개수 구하기
+```kotlin
+// N: 중복이 혀용된 정수의 개수
+// arr: N개만큼 입력받은 수를 담은 배열(오름차순 정렬 필요)
+// lt: 왼쪽 포인터(0으로 초기화)
+// rt: 오른쪽 포인터(arr.size-1로 초기화)
+// result: M을 만들 수 있는 경우 총 합
+for (i in 0 until N) {
+    val find = arr[i]
+    lt = 0
+    rt = N - 1
+    while (lt < rt) {
+        if (arr[lt] + arr[rt] == find) {
+            // 자기 자신과 0이 합해진 경우는 제외해야함
+            if (lt != i && rt != i) {
+                result++
+                break
+            } else if (lt == i) lt++
+            else if (rt == i) rt--
+        } else if (arr[lt] + arr[rt] < find) lt++
+        else rt--
+    }
+}
+```
+예제: 백준 1253([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Gold/1253.%E2%80%85%EC%A2%8B%EB%8B%A4/%EC%A2%8B%EB%8B%A4.kt))
 
 
 ---

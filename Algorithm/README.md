@@ -8,6 +8,8 @@
 - [2. 투 포인터](#2-투-포인터)
   - [연속된 자연수의 합 구하기](#연속된-자연수의-합-구하기)
   - [연속되지 않은 자연수 배열에서 합 조건 찾기](#연속되지-않은-자연수-배열에서-합-조건-찾기)
+- [3. 슬라이딩 윈도우](#3-슬라이딩-윈도우)
+  - [주어진 문자열에서 조건을 만족하는 부분 문자열 구하기](#주어진-문자열에서-조건을-만족하는-부분-문자열-구하기)
 
 # 1. 구간 합
 ## 1차원 배열에서의 합배열
@@ -124,6 +126,95 @@ for (i in 0 until N) {
 ```
 예제: 백준 1253([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Gold/1253.%E2%80%85%EC%A2%8B%EB%8B%A4/%EC%A2%8B%EB%8B%A4.kt))
 
+# 3. 슬라이딩 윈도우
+슬라이딩 윈도우는 O(n^2)의 시간복잡도를 O(n)으로 줄이기 위해 2중 반복이 아닌 **범위 앞/뒤의 원소를 추가/제거** 하는 방식의 알고리즘
+
+## 주어진 문자열에서 조건을 만족하는 부분 문자열 구하기
+길이가 P개인 문자열을 받아 길이가 S개인 연속 부분 문자열들 중에서 알파벳 { A, C, G, T } 의 최소 개수를 만족하는 부분 문자열 개수 구하기
+```kotlin
+// checkArr: 유효한 비밀번호인지 체크하는 조건이 담긴 배열
+// myArr: 돌고있는 슬라이딩 윈도우의 문자열에서 체크한 필요 알파벳의 개수를 담은 배열
+// checkSecret: 돌고있는 슬라이딩 윈도우의 문자열에서 조건을 만족하는 알파벳 개수
+// S: DNA 문자열 개수
+// P: 암호로 만들 문자열 개수
+// A: DNA 알파벳을 담은 문자열
+// result: 조건을 만족하는 암호 개수
+
+// 암호 입력받기
+for (i in 0 until 4) {
+    checkArr[i] = sc.nextInt()
+    if (checkArr[i] == 0) checkSecret++
+}
+
+// 입력받은 문자열의 앞 P개만큼 먼저 체크
+for (i in 0 until P) add(A[i])
+
+// 알파벳 네개가 모두 조건을 만족하면 암호 개수 +1
+if (checkSecret == 4) result++
+
+// 2번째 알파벳부터 슬라이딩 윈도우를 돌며 조건 체크
+for (i in P until S) { 
+    // 이전 슬라이딩 윈도우에서 가장 첫 인덱스를 찾아 제거 
+    val j = i - P 
+    // 새로운 슬라이딩 윈도우에서 마지막에 해당하는 인텍스 알파벳 추가 
+    add(A[i]) 
+    // 이전 슬라이딩 윈도우에서 첫번째 인덱스 알파벳 제거 
+    remove(A[j]) 
+    // 알파벳 네개가 모두 조건을 만족하면 암호 개수 +1 
+    if (checkSecret == 4) result++
+}
+
+/**
+ * 새로 추가된 알파벳이 암호 조건을 만족하는지 확인하는 함수
+ * 새로 알파벳이 추가되어 해당 알파벳이 조건을 만족하게 된 경우 +1
+ */
+private fun add(c: Char) {
+    when (c) {
+        'A' -> {
+            myArr[0]++
+            if (myArr[0] == checkArr[0]) checkSecret++
+        }
+        'C' -> {
+            myArr[1]++
+            if (myArr[1] == checkArr[1]) checkSecret++
+        }
+        'G' -> {
+            myArr[2]++
+            if (myArr[2] == checkArr[2]) checkSecret++
+        }
+        'T' -> {
+            myArr[3]++
+            if (myArr[3] == checkArr[3]) checkSecret++
+        }
+    }
+}
+
+/**
+ * 지나간 알파벳을 제거하는 함수
+ * 기존에 암호 조건을 만족하고 있었다면 암호 조건 만족하는 알파벳 개수에서 -1
+ */
+private fun remove(c: Char) {
+    when (c) {
+        'A' -> {
+            if (myArr[0] == checkArr[0]) checkSecret--
+            myArr[0]--
+        }
+        'C' -> {
+            if (myArr[1] == checkArr[1]) checkSecret--
+            myArr[1]--
+        }
+        'G' -> {
+            if (myArr[2] == checkArr[2]) checkSecret--
+            myArr[2]--
+        }
+        'T' -> {
+            if (myArr[3] == checkArr[3]) checkSecret--
+            myArr[3]--
+        }
+    }
+}
+```
+예제: 백준 12891([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Silver/12891.%E2%80%85DNA%E2%80%85%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8/DNA%E2%80%85%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8.kt))
 
 ---
 

@@ -224,7 +224,8 @@ N개의 주어진 숫자들 중 L개 연속된 숫자 중 최소값 찾기
 // N: 숫자의 개수
 // L; 최소값을 찾을 범위
 // Node: index와 value를 가진 클래스
-// deq: Node를 가지고 있을 배열(추상화: Deque - 앞/뒤 양쪽으로 값을 추가하거나 삭제할 수 있음, 구현체: LinkedList)
+// deq: Node를 가지고 있을 배열(ArrayDeque or LinkedList(자료형을Deque로 함))
+// Deque - 앞/뒤 양쪽으로 값을 추가하거나 삭제할 수 있음, 
 // st: BufferedReader로 읽은 한 줄을 공백을 기준으로 쪼개서 문자열 토큰으로 리턴해주는 StringTokenizer
 
 // N개의 수만큼 받아서 바로 비교함으로써, 시간복잡도를 줄일 수 있음
@@ -244,7 +245,7 @@ for (i in 0 until N) {
     bw.write("${deq.first.value} ")
 }
 ```
-예제: 백준 11003([코드(Java)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Platinum/11003.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0.java))
+예제: 백준 11003 - [코드(Java)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Platinum/11003.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0.java), [코드(Kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Platinum/11003.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0.kt)
 
 ---
 

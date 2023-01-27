@@ -11,6 +11,9 @@
 - [3. 슬라이딩 윈도우](#3-슬라이딩-윈도우)
   - [주어진 문자열에서 조건을 만족하는 부분 문자열 구하기](#주어진-문자열에서-조건을-만족하는-부분-문자열-구하기)
   - [최소값 찾기](#최소값-찾기)
+- [4. 스택과 큐](#4-스택과-큐)
+  - [스택으로 오름차순 수열 만들기](#스택으로-오름차순-수열-만들기)
+  - [오큰수 구하기](#오큰수-구하기)
 
 # 1. 구간 합
 ## 1차원 배열에서의 합배열
@@ -126,6 +129,8 @@ for (i in 0 until N) {
 }
 ```
 예제: 백준 1253([코드(Kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Gold/1253.%E2%80%85%EC%A2%8B%EB%8B%A4/%EC%A2%8B%EB%8B%A4.kt))
+
+---
 
 # 3. 슬라이딩 윈도우
 슬라이딩 윈도우는 O(n^2)의 시간복잡도를 O(n)으로 줄이기 위해 2중 반복이 아닌 **범위 앞/뒤의 원소를 추가/제거** 하는 방식의 알고리즘
@@ -246,6 +251,82 @@ for (i in 0 until N) {
 }
 ```
 예제: 백준 11003 - [코드(Java)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Platinum/11003.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0.java), [코드(Kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Platinum/11003.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0.kt)
+
+---
+
+# 4. 스택과 큐
+- stack: LIFO(Last In First Out, 선입후출)로 push(), pop(), peek() 등 함수가 있다.
+- queue: FIFO(First In First Out, 선입선출)로 add(), poll(), peek() 등 함수가 있다.
+
+## 스택으로 오름차순 수열 만들기
+stack을 이용해서 N개의 숫자를 오름차순 수열로 만들 수 있는지 확인
+
+```kotlin
+// N: 입력받을 숫자들의 개수
+// arr: 입력받은 숫자들을 담을 배열
+// stack: 오름차순 숫자를 담을 스택
+// temp: stack에 담을 숫자(한번 담을때 +1씩)
+for (i in 0 until N) {
+
+    // 수열을 만들어야하는 숫자보다 temp가 같아질때까지 계속 반복(수열을 만들 수랑 같은 수가 stack에 들어갈때까지)
+    while (temp < arr[i]) {
+        // stack의 마지막 수가 수열을 만들 수보다 큰경우 제거
+        if (stack.isNotEmpty() && stack.peek() > arr[i]) {
+            answer.append("-").append("\n")
+            stack.pop()
+        } 
+        // stack의 마지막 수가 수열을 만들 수보다 작은경우 temp+1을 stack에 추가
+        else if (stack.isNotEmpty() && stack.peek() < arr[i]) {
+            answer.append("+").append("\n")
+            stack.push(++temp)
+        } 
+        // stack이 비어있는 경우 temp+1을 stack에 추가
+        else if (stack.isEmpty()) {
+            answer.append("+").append("\n")
+            stack.push(++temp)
+        }
+    }
+
+    // stack의 마지막 수가 수열을 만들 수와 같으면 stack에서 제거
+    if (stack.isNotEmpty() && stack.peek() == arr[i]) {
+        answer.append("-").append("\n")
+        stack.pop()
+    } 
+    // stack이 비어있거나, stack의 마지막 수와 수열을 만들 수가 다르면 NO 출력하고 return
+    else {
+        println("NO")
+        return
+    }
+
+}
+```
+예제: 백준 1874([코드(Kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Silver/1874.%E2%80%85%EC%8A%A4%ED%83%9D%E2%80%85%EC%88%98%EC%97%B4/%EC%8A%A4%ED%83%9D%E2%80%85%EC%88%98%EC%97%B4.kt))
+
+## 오큰수 구하기
+크기가 N인 수열이 주어지고, 각 원소의 오른쪽에 있으면서 해당 원소보다 값이 크면서 가장 왼쪽에 있는 값(오큰수)을 구하기
+
+```kotlin
+// N: 수열의 크기
+// arr: 입력받은 수열을 담은 배열
+// answer: 인덱스별로 오큰수를 담을 배열
+// stack: 인덱스를 담을 Stack
+
+// 1번 인덱스의 수가 0번 인덱스의 수의 오큰수가 될 수 있는지 확인하면 되기 때문에 1부터 시작
+for (i in 1 until N) {
+    // 현재(i)번째 수와 i번째 이전의 수들의 크기를 비교하여 i번째 수가 이전 수들의 오큰수가 될 수 있는지 확인하며 시간복잡도에서 이득
+    // 스택의 top에 들어있는 인덱스번째 수보다 i 번째 수가 작으면 스택에 들어있는 다른 인덱스번째 수들에도 오큰수가 될 수 없음
+    // 스택의 top에 들어있는 인덱스번째 수와 i번째 수를 계속 비교하며 i 번째 수가 더 크다면 스택의 top에 들어있는 인덱스 번째 수의 오큰수는 i번째 수가 됨
+    while (stack.isNotEmpty() && arr[stack.peek()] < arr[i]) answer[stack.pop()] = arr[i]
+    // 현재(i)번째 수의 오큰수는 다음(i+1)번째 수부터 확인해야하기 때문에 stack의 top부분에 i를 추가
+    stack.push(i)
+}
+
+// 오큰수를 찾지 못한 인덱스(stack에 남아있는 인덱스)번째는 -1을 넣어줌
+while (stack.isNotEmpty()) {
+    answer[stack.pop()] = -1
+}
+```
+예제: 백준 17298([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Gold/17298.%E2%80%85%EC%98%A4%ED%81%B0%EC%88%98/%EC%98%A4%ED%81%B0%EC%88%98.kt))
 
 ---
 

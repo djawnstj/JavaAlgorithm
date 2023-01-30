@@ -341,6 +341,27 @@ while (queue.size > 1) {
 ```
 예제: 백준 2164([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Silver/2164.%E2%80%85%EC%B9%B4%EB%93%9C2/%EC%B9%B4%EB%93%9C2.kt))
 
+## 절댓값 힙 구현하기
+수열에서 가장 작은 절대값을 리턴하는 절댓값 힙을 구현하기
+```kotlin
+// N: 입력받은 수열의 크기
+
+// 절대값 크기별 오름차순으로 정렬시킬 우선순위 Queue (우선순위를 지정해줘야함)
+val queue: Queue<Int> = PriorityQueue { o1, o2 ->
+    val f = Math.abs(o1) // 비교할 값의 절대값 구해주기
+    val s = Math.abs(o2) // 비교할 값의 절대값 구해주기
+    // 절대값이 같으면 음수먼저, 다르면 절대값을 기준으로 정렬
+    return@PriorityQueue if (f == s && o1 > o2) 1 else if (f == s && o1 <= o2) -1 else f-s
+}
+for (i in 0 until N) {
+    val x = br.readLine().toInt()
+    if (x == 0) {
+        if (queue.isEmpty()) println(0) else println(queue.poll().toString())
+    } else queue.add(x)
+}
+```
+예제: 백준 11286([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Silver/11286.%E2%80%85%EC%A0%88%EB%8C%93%EA%B0%92%E2%80%85%ED%9E%99/%EC%A0%88%EB%8C%93%EA%B0%92%E2%80%85%ED%9E%99.kt))
+
 
 ---
 

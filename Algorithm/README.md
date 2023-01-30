@@ -14,6 +14,7 @@
 - [4. 스택과 큐](#4-스택과-큐)
   - [스택으로 오름차순 수열 만들기](#스택으로-오름차순-수열-만들기)
   - [오큰수 구하기](#오큰수-구하기)
+  - [카드 게임](#카드-게임)
 
 # 1. 구간 합
 ## 1차원 배열에서의 합배열
@@ -327,6 +328,19 @@ while (stack.isNotEmpty()) {
 }
 ```
 예제: 백준 17298([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Gold/17298.%E2%80%85%EC%98%A4%ED%81%B0%EC%88%98/%EC%98%A4%ED%81%B0%EC%88%98.kt))
+
+## 카드 게임
+자연수 N을 입력받고 N이하의 오름차순 자연수 수열에서 가장 앞의 수를 버린 후 다음 수를 마지막 순서로 보내기를 숫자가 하나 남을때까지 반복하면, 마지막으로 남는 수를 구하기
+```kotlin
+// N: 입력받은 자연수
+// queue: 자연수 수열을 담을 Queue(구현체 - LinkedList)
+while (queue.size > 1) {
+    queue.poll()
+    queue.add(queue.poll())
+}
+```
+예제: 백준 2164([코드(kotlin)](https://github.com/djawnstj/Algorithm/blob/learned/%EB%B0%B1%EC%A4%80/Silver/2164.%E2%80%85%EC%B9%B4%EB%93%9C2/%EC%B9%B4%EB%93%9C2.kt))
+
 
 ---
 
